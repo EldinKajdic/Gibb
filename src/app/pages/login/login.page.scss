@@ -1,0 +1,43 @@
+.logo {
+          width: 50%;
+          height: auto;
+          max-width: 12em;
+          margin: 0 auto;
+          padding-bottom: 50px;
+        }
+        .no-border {
+          border-bottom: 0 !important;
+          box-shadow: none !important;
+          padding-bottom: 0;
+        }
+        ion-row {
+          align-items: center;
+          text-align: center;
+        }
+        @media only screen and (min-width: 768px) {
+          ion-col.col {
+            margin: 0 auto;
+            max-width: 40%;
+          }
+        }
+        .link {
+          color: white;
+          cursor: pointer;
+        }
+        .input-login {
+          padding-left: 10px !important;
+          background-color: #f6f6f6;
+          opacity: 0.7;
+          font-size: 0.9em;   
+        }
+        .no-margin {
+          margin: 0;
+        }
+        
+        ion-content {
+            --background: url('https://images.wallpaperscraft.com/image/playstation_gamepad_crash_22102_1920x1080.jpg')  no-repeat 50% 10%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-color: transparent;
+        } 

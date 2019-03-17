@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="!searchBarDisplayed">
+      Chat
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only *ngIf="!searchBarDisplayed" (click)="searchBarDisplayed = true">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-searchbar [(ngModel)]="searchText" showCancelButton="true" (ionBlur)="searchBarDisplayed = false; searchText = '';"
+      (ionCancel)="searchBarDisplayed = false; searchText = '';" *ngIf="searchBarDisplayed"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list class="no-margin-bottom" *ngIf="chatsToday.length > 0">
+    <ion-list-header>
+      <ion-label>Today</ion-label>
+    </ion-list-header>
+    <ion-item-sliding class="slide-item" *ngFor="let chat of chatsToday | filter: searchText">
+      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+        <ion-note class="note-start">{{chat.title}}</ion-note>
+        <ion-avatar slot="start">
+          <img [src]="chat.imageUrl">
+        </ion-avatar>
+        <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
+        <ion-note class="note-end">{{chat.timestamp | date: 'shortTime'}}</ion-note>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="success" (click)="unread(item)">
+          <ion-icon name="logo-xbox"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="dark" (click)="unread(item)">
+          <ion-icon name="logo-steam"></ion-icon>
+        </ion-item-option>
+        <ion-item-option expandable color="primary" (click)="unread(item)">
+          <ion-icon name="logo-playstation"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsToday, chat)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list class="no-margin-bottom" *ngIf="chatsYesterday.length > 0">
+    <ion-list-header>
+      <ion-label>Yesterday</ion-label>
+    </ion-list-header>
+    <ion-item-sliding class="slide-item" *ngFor="let chat of chatsYesterday | filter: searchText">
+      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+        <ion-note class="note-start">{{chat.title}}</ion-note>
+        <ion-avatar slot="start">
+          <img [src]="chat.imageUrl">
+        </ion-avatar>
+        <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
+        <ion-note class="note-end">{{chat.timestamp | date: 'shortTime'}}</ion-note>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="success" (click)="unread(item)">
+          <ion-icon name="logo-xbox"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="dark" (click)="unread(item)">
+          <ion-icon name="logo-steam"></ion-icon>
+        </ion-item-option>
+        <ion-item-option expandable color="primary" (click)="unread(item)">
+          <ion-icon name="logo-playstation"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsYesterday, chat)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list class="no-margin-bottom" *ngIf="chatsLastWeek.length > 0">
+    <ion-list-header>
+      <ion-label>Last Week</ion-label>
+    </ion-list-header>
+    <ion-item-sliding class="slide-item" *ngFor="let chat of chatsLastWeek | filter: searchText as chatsLastWeekRows">
+      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+        <ion-note class="note-start">{{chat.title}}</ion-note>
+        <ion-avatar slot="start">
+          <img [src]="chat.imageUrl">
+        </ion-avatar>
+        <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
+        <ion-note class="note-end">{{chat.timestamp | date: shortTime}}</ion-note>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="success" (click)="unread(item)">
+          <ion-icon name="logo-xbox"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="dark" (click)="unread(item)">
+          <ion-icon name="logo-steam"></ion-icon>
+        </ion-item-option>
+        <ion-item-option expandable color="primary" (click)="unread(item)">
+          <ion-icon name="logo-playstation"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsLastWeek, chat)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list class="no-margin-bottom" *ngIf="chatsLastMonth.length > 0">
+    <ion-list-header>
+      <ion-label>Last Month</ion-label>
+    </ion-list-header>
+    <ion-item-sliding class="slide-item" *ngFor="let chat of chatsLastMonth | filter: searchText as chatsLastMonthRows">
+      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+        <ion-note class="note-start">{{chat.title}}</ion-note>
+        <ion-avatar slot="start">
+          <img [src]="chat.imageUrl">
+        </ion-avatar>
+        <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
+        <ion-note class="note-end">{{chat.timestamp | date: shortTime}}</ion-note>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="success" (click)="unread(item)">
+          <ion-icon name="logo-xbox"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="dark" (click)="unread(item)">
+          <ion-icon name="logo-steam"></ion-icon>
+        </ion-item-option>
+        <ion-item-option expandable color="primary" (click)="unread(item)">
+          <ion-icon name="logo-playstation"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsLastMonth, chat)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <div *ngIf="showNoMessagesText()">
+    <p style="text-align: center">
+      You currently have no messages to display.<br>
+      <a>Start a new conversation!</a>
+    </p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loading-spinner="dots" loading-text="Loading messages..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
