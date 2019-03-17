@@ -13,7 +13,7 @@
       </ion-row>
       <ion-row style="max-width: 700px; margin: 0 auto;">
         <ion-col>
-          <ion-list inset class="no-border no-margin">
+          <ion-list inset class="no-border no-margin" style="border: 1px solid #3880ff">
             <ion-item class="input-login">
               <ion-label position="fixed">Username</ion-label>
               <ion-input clear-input inputmode="email" placeholder="example@example.com"></ion-input>
@@ -33,7 +33,7 @@
       <ion-row>
         <ion-col>
           <img src="../../../assets/google/btn_google_signin_light_normal_web.png" style="cursor: pointer"
-           (click)="auth.googleSignin()">
+           (click)="signInWithGoogle()">
         </ion-col>
       </ion-row>
       <ion-row>

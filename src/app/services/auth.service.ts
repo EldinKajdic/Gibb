@@ -12,6 +12,8 @@ import { User } from '../classes/users/user.model';
 })
 export class AuthService {
   user$: Observable<User>;
+  user: any;
+
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) { 
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
@@ -28,8 +30,12 @@ export class AuthService {
   async googleSignin() {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
-    this.router.navigate(['/tabs/home']);
-    return this.updateUserData(credential.user);
+    this.user = this.updateUserData(credential.user);
+    return this.router.navigate(['/tabs/home']);
+  }
+
+  async getUser(){
+    return this.user;
   }
 
   async signOut() {

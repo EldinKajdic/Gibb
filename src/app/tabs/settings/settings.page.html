@@ -7,8 +7,20 @@
 </ion-header>
 
 <ion-content>
-    <ion-button expand="block" [routerLink]="['/']" (click)="auth.signOut()" style="max-width: 500px;">
+  <div *ngIf="auth.user$ | async as user" style="text-align: center">
+    <ion-avatar style="margin: 0 auto; margin-top: 20px;">
+      <img src="{{user.photoURL}}">
+    </ion-avatar>
+    <h3>{{user.displayName}}</h3>
+    <p>{{user.email}}</p>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" [routerLink]="['/']" (click)="auth.signOut()" style="max-width: 500px; margin: 0 auto;">
       <ion-icon slot="start" name="log-out"></ion-icon>
       Sign out
     </ion-button>
-</ion-content>
+  </ion-toolbar>
+</ion-footer>
