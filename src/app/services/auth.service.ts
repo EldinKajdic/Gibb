@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 import { User } from '../classes/users/user.model';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   user$: Observable<User>;
   user: any;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) { 
+  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router, private platform: Platform) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
@@ -27,15 +28,27 @@ export class AuthService {
     );
   }
 
-  async googleSignin() {
-    const provider = new auth.GoogleAuthProvider();
-    const credential = await this.afAuth.auth.signInWithPopup(provider);
-    this.user = this.updateUserData(credential.user);
-    return this.router.navigate(['/tabs/home']);
+  registerUser(userEmail: string, userPassword: string): any {
+    throw new Error("Method not implemented.");
   }
 
-  async getUser(){
+  async googleSignin() {
+    const provider = new auth.GoogleAuthProvider();
+    if (!this.platform.is('cordova')) {
+      const credential = await this.afAuth.auth.signInWithPopup(provider);
+      this.user = this.updateUserData(credential.user);
+      return this.router.navigate(['/tabs/home']);
+    }
+  }
+
+  async getUser() {
     return this.user;
+  }
+
+  async signInWithCredentials(email, password){
+    const credential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    this.user = this.updateUserData(credential.user);
+    return this.router.navigate(['/tabs/home']);
   }
 
   async signOut() {

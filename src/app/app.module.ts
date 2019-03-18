@@ -14,6 +14,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { RegisterModalModule } from './pages/register/modals/registermodal/registermodal.module';
 
 var config = {
   apiKey: "AIzaSyDM79xt0ytIBLP3fImhkg2ho-S_JEeGf68",
@@ -30,6 +31,7 @@ var config = {
   ],
   entryComponents: [],
   imports: [
+    RegisterModalModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -37,7 +39,7 @@ var config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
-    AngularFireStorageModule // storage
+    AngularFireStorageModule // storage,   
   ],
   providers: [
     StatusBar,

@@ -5,7 +5,8 @@ import { AuthGuard } from './services/auth.guard';
 const routes: Routes = [
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthGuard] },
   { path: 'message/:chatId', loadChildren: './pages/message/message.module#MessagePageModule', canActivate: [AuthGuard] },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' }
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+  { path: '**', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthGuard]}
 
 ];
 @NgModule({

@@ -25,10 +25,10 @@
           cursor: pointer;
         }
         .input-login {
-          padding-left: 10px !important;
           background-color: #f6f6f6;
           opacity: 0.7;
           font-size: 0.9em;   
+          margin-left: 10px;
         }
         .no-margin {
           margin: 0;
@@ -36,7 +36,7 @@
         }
         
         ion-content {
-            --background: url('https://images.wallpaperscraft.com/image/playstation_gamepad_crash_22102_1920x1080.jpg')  no-repeat 50% 10%;
+            --background: url('../../../assets/backgrounds/psbg.png')  no-repeat 50% 10%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

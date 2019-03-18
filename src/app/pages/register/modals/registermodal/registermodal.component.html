@@ -1,0 +1,33 @@
+<ion-buttons class="close-button" slot="start">
+  <ion-button (click)="closeModal()">
+    <ion-icon slot="icon-only" name="close"></ion-icon>
+  </ion-button>
+</ion-buttons>
+
+<ion-content fullscreen>
+  <div padding>
+    <ion-row style="max-width: 700px; margin: 0 auto;">
+      <ion-col style="margin-top: 225px;">
+        <ion-list inset class="no-border no-margin" style="border: 1px solid #3880ff">
+          <ion-item class="input-login">
+            <ion-label position="fixed">Username</ion-label>
+            <ion-input clear-input type="text" [(ngModel)]="userEmail" placeholder="Your name"></ion-input>
+          </ion-item>
+          <ion-item class="input-login">
+            <ion-label position="fixed">Email</ion-label>
+            <ion-input clear-input type="email" [(ngModel)]="userEmail" placeholder="example@gibb.nu"></ion-input>
+          </ion-item>
+          <ion-item class="input-login">
+            <ion-label position="fixed">Password</ion-label>
+            <ion-input placeholder="*********" inputmode="password" [(ngModel)]="userPassword" type="password"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row style="max-width: 700px; margin: 0 auto;">
+      <ion-col>
+        <ion-button expand="block" (click)="registerAccount()">Get started</ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
