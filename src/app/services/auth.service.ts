@@ -19,25 +19,48 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
+          this.user = user;
+          localStorage.setItem('user', JSON.stringify(this.user));
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         }
         else {
+          localStorage.setItem('user', null);
           return of(null);
         }
       })
     );
   }
 
-  registerUser(userEmail: string, userPassword: string): any {
-    throw new Error("Method not implemented.");
+  async registerUser(userName: string, userEmail: string, userPassword: string) {
+    var credential = await this.afAuth.auth.createUserWithEmailAndPassword(userEmail, userPassword);
+    if (credential.user) {
+      this.user = this.updateUserData(credential.user);
+    }
+    return credential;
+  }
+
+  async sendEmailVerification() {
+    const result = await this.afAuth.auth.currentUser.sendEmailVerification();
+    console.log(result);
+  }
+
+  async sendPasswordResetEmail(passwordResetEmail: string) {
+    return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+  }
+
+  async navigate(router: string) {
+    this.router.navigate([router]);
   }
 
   async googleSignin() {
     const provider = new auth.GoogleAuthProvider();
     if (!this.platform.is('cordova')) {
-      const credential = await this.afAuth.auth.signInWithPopup(provider);
-      this.user = this.updateUserData(credential.user);
-      return this.router.navigate(['/tabs/home']);
+      await this.afAuth.auth.signInWithPopup(provider).then((user) => {
+        this.user = this.updateUserData(user);
+        return this.router.navigate(['/tabs/home']);
+      }).catch(error => {
+        return error.message;
+      });
     }
   }
 
@@ -45,15 +68,24 @@ export class AuthService {
     return this.user;
   }
 
-  async signInWithCredentials(email, password){
-    const credential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-    this.user = this.updateUserData(credential.user);
-    return this.router.navigate(['/tabs/home']);
+  async signInWithCredentials(email: string, password: string) {
+    var credential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    if (credential.user) {
+      this.user = this.updateUserData(credential.user);
+    }
+    return credential;
   }
 
   async signOut() {
-    await this.afAuth.auth.signOut();
-    return this.router.navigate(['/login']);
+    await this.afAuth.auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      return this.router.navigate(['/login']);
+    });
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user !== null;
   }
 
   private updateUserData(user) {

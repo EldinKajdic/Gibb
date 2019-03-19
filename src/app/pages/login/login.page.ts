@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingController, Platform, ModalController } from '@ionic/angular';
+import { LoadingController, Platform, ModalController, ToastController } from '@ionic/angular';
 import { isNullOrUndefined } from 'util';
 import { RegistermodalComponent } from '../register/modals/registermodal/registermodal.component';
 
@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
   public userEmail: string;
   public userPassword: string;
 
-  constructor(public auth: AuthService, public loadingController: LoadingController, public platform: Platform, public modalController: ModalController) { }
+  constructor(public auth: AuthService, public loadingController: LoadingController, public platform: Platform, public modalController: ModalController, private toast: ToastController) { }
 
   ngOnInit() {
     if (this.platform.is('desktop')) {
@@ -43,8 +43,16 @@ export class LoginPage implements OnInit {
       });
 
       await loading.present();
-      this.auth.signInWithCredentials(this.userEmail, this.userPassword);
+      this.auth.signInWithCredentials(this.userEmail, this.userPassword).then((user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        return this.auth.navigate('/tabs/home');
+      }).catch(error => {
+        this.showToast(error.message);
+      });
       await loading.dismiss();
+    }
+    else {
+      this.showToast('Please fill in all the required fields.')
     }
   }
 
@@ -57,9 +65,22 @@ export class LoginPage implements OnInit {
       });
 
       await loading.present();
-      await this.auth.googleSignin();
+      await this.auth.googleSignin().then((user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        return this.auth.navigate('/tabs/home');
+      }).catch(error => {
+        this.showToast(error.message);
+      });
       await loading.dismiss();
     }
+  }
+
+  async showToast(msg: string) {
+    const toast = await this.toast.create({
+      message: msg,
+      duration: 5000
+    });
+    toast.present();
   }
 
 }

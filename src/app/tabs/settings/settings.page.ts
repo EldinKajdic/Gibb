@@ -10,6 +10,8 @@ import { LoadingController } from '@ionic/angular';
 export class settingsPage implements OnInit {
 
   user:any;
+  defaultProfileUrl:string = '../../assets/profile/defaultProfile.png';
+  emailVerified:boolean;
   constructor(public auth: AuthService, public loadingController: LoadingController) {
     
   }
@@ -19,14 +21,8 @@ export class settingsPage implements OnInit {
   }
 
   async getUserProfile(){
-    const loading = await this.loadingController.create({
-      spinner: 'crescent',
-      keyboardClose: true,
-      showBackdrop: false
-    });
-
-    await loading.present();
-    this.user = this.auth.getUser();
-    await loading.dismiss();
+    this.emailVerified = false;
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.emailVerified = this.user.emailVerified;
   }
 }

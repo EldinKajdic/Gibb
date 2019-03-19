@@ -9,16 +9,24 @@
 <ion-content>
   <div *ngIf="auth.user$ | async as user" style="text-align: center">
     <ion-avatar style="margin: 0 auto; margin-top: 20px;">
-      <img src="{{user.photoURL}}">
+      <img src="{{user.photoURL == null ? defaultProfileUrl : user.photoURL}}">
     </ion-avatar>
-    <h3>{{user.displayName}}</h3>
-    <p>{{user.email}}</p>
+    <h3>{{user.displayName == null ? 'Anonymous' : user.displayName}}</h3>
+    <p><span style="font-weight: bold;">Email: </span>{{user.email}}</p>
+    <p><span style="font-weight: bold;">Email verified: </span>
+      <span *ngIf="emailVerified; else no" style="color: green; font-weight: bold;">
+        Yes
+      </span>
+      <ng-template #no>
+        <span style="color: red; font-weight: bold;">Not yet!</span>
+      </ng-template>
+    </p>
   </div>
 
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" [routerLink]="['/']" (click)="auth.signOut()" style="max-width: 500px; margin: 0 auto;">
+    <ion-button expand="block" (click)="auth.signOut()" style="max-width: 500px; margin: 0 auto;">
       <ion-icon slot="start" name="log-out"></ion-icon>
       Sign out
     </ion-button>

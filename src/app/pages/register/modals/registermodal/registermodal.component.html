@@ -7,19 +7,28 @@
 <ion-content fullscreen>
   <div padding>
     <ion-row style="max-width: 700px; margin: 0 auto;">
-      <ion-col style="margin-top: 225px;">
-        <ion-list inset class="no-border no-margin" style="border: 1px solid #3880ff">
+      <ion-col class="form-margin">
+        <ion-list inset class="no-border no-margin">
+          <ion-item color="primary">
+            <h4 style="margin: 0 auto;">Register new account</h4>
+          </ion-item>
           <ion-item class="input-login">
             <ion-label position="fixed">Username</ion-label>
-            <ion-input clear-input type="text" [(ngModel)]="userEmail" placeholder="Your name"></ion-input>
+            <ion-input minlength="3" maxlength="30" color="primary" clear-input type="text" [(ngModel)]="userName"
+              placeholder="TheGibber95"></ion-input>
           </ion-item>
           <ion-item class="input-login">
             <ion-label position="fixed">Email</ion-label>
-            <ion-input clear-input type="email" [(ngModel)]="userEmail" placeholder="example@gibb.nu"></ion-input>
+            <ion-input
+              pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
+              minlength="6" maxlength="30" clear-input type="email" inputmode="email" [(ngModel)]="userEmail"
+              placeholder="example@gibb.nu"></ion-input>
           </ion-item>
           <ion-item class="input-login">
             <ion-label position="fixed">Password</ion-label>
-            <ion-input placeholder="*********" inputmode="password" [(ngModel)]="userPassword" type="password"></ion-input>
+            <ion-input minlength="6" maxlength="30" placeholder="*********" clear-input inputmode="password"
+              [(ngModel)]="userPassword" type="password">
+            </ion-input>
           </ion-item>
         </ion-list>
       </ion-col>
