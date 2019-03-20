@@ -1,0 +1,26 @@
+<ion-header no-border>
+    <ion-buttons class="close-button" slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+</ion-header>
+
+<ion-content fullscreen class="no-padding-top">
+  <ion-slides #slider pager="true" (ionSlideWillChange)="onSlideChanged()">
+    <ion-slide *ngFor="let slide of slides" class="slide-background"
+      [ngStyle]="{'background-image': 'url(' + slide.imageUrl +')'}">
+      <div class="text-wrapper">
+        <div class="slide-text">
+          <h2 class="slide-title" [innerHTML]="slide.title"></h2><br>
+          <p [innerHTML]="slide.description"></p>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <div *ngIf="slideIndex >= slides.length - 1">
+    <ion-button class="floating-button" expand="block" (click)="closeModal()">
+      Let's go!
+    </ion-button>
+  </div>
+</ion-content>

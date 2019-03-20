@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController, Platform } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined } from 'util';
+import { HomeModalComponent } from 'src/app/tabs/home/home-modal/home-modal.component';
 
 @Component({
   selector: 'app-registermodal',
@@ -13,7 +14,7 @@ export class RegistermodalComponent implements OnInit {
   public userEmail: string;
   public userPassword: string;
 
-  constructor(private modalController: ModalController, private auth: AuthService, private loadingController: LoadingController, private toast: ToastController) { }
+  constructor(private modalController: ModalController, private auth: AuthService, private loadingController: LoadingController, private toast: ToastController, private platform: Platform) { }
 
   async closeModal() {
     await this.modalController.dismiss();
@@ -30,6 +31,11 @@ export class RegistermodalComponent implements OnInit {
       await this.auth.registerUser(this.userName, this.userEmail, this.userPassword).then((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         this.auth.sendEmailVerification();
+        this.closeModal().then(() => {
+          if (!this.platform.is('cordova')) {
+            this.openIntroModal();
+          }
+        });
         return this.auth.navigate('/tabs/home');
       }).catch(error => {
         this.showToast(error.message);
@@ -39,6 +45,14 @@ export class RegistermodalComponent implements OnInit {
     else {
       this.showToast('Please fill in all the required fields.')
     }
+  }
+
+  async openIntroModal() {
+    const modal = await this.modalController.create({
+      component: HomeModalComponent
+    });
+
+    await modal.present();
   }
 
   async showToast(msg: string) {

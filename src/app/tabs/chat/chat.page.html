@@ -1,15 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title *ngIf="!searchBarDisplayed">
-      Chat
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button icon-only *ngIf="!searchBarDisplayed" (click)="searchBarDisplayed = true">
-        <ion-icon name="search"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-searchbar [(ngModel)]="searchText" showCancelButton="true" (ionBlur)="searchBarDisplayed = false; searchText = '';"
-      (ionCancel)="searchBarDisplayed = false; searchText = '';" *ngIf="searchBarDisplayed"></ion-searchbar>
+    <ion-searchbar animated="true" [(ngModel)]="searchText" showCancelButton="true" (ionCancel)="searchText = '';"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -33,13 +24,13 @@
         <ion-note class="note-end">{{chat.timestamp | date: 'shortTime'}}</ion-note>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option color="success" (click)="unread(item)">
+        <ion-item-option color="secondary">
           <ion-icon name="logo-xbox"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="dark" (click)="unread(item)">
+        <ion-item-option color="dark">
           <ion-icon name="logo-steam"></ion-icon>
         </ion-item-option>
-        <ion-item-option expandable color="primary" (click)="unread(item)">
+        <ion-item-option expandable color="primary">
           <ion-icon name="logo-playstation"></ion-icon>
         </ion-item-option>
       </ion-item-options>
@@ -64,13 +55,13 @@
         <ion-note class="note-end">{{chat.timestamp | date: 'shortTime'}}</ion-note>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option color="success" (click)="unread(item)">
+        <ion-item-option color="success">
           <ion-icon name="logo-xbox"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="dark" (click)="unread(item)">
+        <ion-item-option color="dark">
           <ion-icon name="logo-steam"></ion-icon>
         </ion-item-option>
-        <ion-item-option expandable color="primary" (click)="unread(item)">
+        <ion-item-option expandable color="primary">
           <ion-icon name="logo-playstation"></ion-icon>
         </ion-item-option>
       </ion-item-options>
@@ -92,16 +83,16 @@
           <img [src]="chat.imageUrl">
         </ion-avatar>
         <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
-        <ion-note class="note-end">{{chat.timestamp | date: shortTime}}</ion-note>
+        <ion-note class="note-end">{{chat.timestamp | date: 'mediumDate'}}</ion-note>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option color="success" (click)="unread(item)">
+        <ion-item-option color="success">
           <ion-icon name="logo-xbox"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="dark" (click)="unread(item)">
+        <ion-item-option color="dark">
           <ion-icon name="logo-steam"></ion-icon>
         </ion-item-option>
-        <ion-item-option expandable color="primary" (click)="unread(item)">
+        <ion-item-option expandable color="primary">
           <ion-icon name="logo-playstation"></ion-icon>
         </ion-item-option>
       </ion-item-options>
@@ -123,16 +114,16 @@
           <img [src]="chat.imageUrl">
         </ion-avatar>
         <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
-        <ion-note class="note-end">{{chat.timestamp | date: shortTime}}</ion-note>
+        <ion-note class="note-end">{{chat.timestamp | date: 'mediumDate'}}</ion-note>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option color="success" (click)="unread(item)">
+        <ion-item-option color="success">
           <ion-icon name="logo-xbox"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="dark" (click)="unread(item)">
+        <ion-item-option color="dark">
           <ion-icon name="logo-steam"></ion-icon>
         </ion-item-option>
-        <ion-item-option expandable color="primary" (click)="unread(item)">
+        <ion-item-option expandable color="primary">
           <ion-icon name="logo-playstation"></ion-icon>
         </ion-item-option>
       </ion-item-options>

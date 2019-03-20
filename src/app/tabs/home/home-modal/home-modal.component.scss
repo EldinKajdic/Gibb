@@ -1,0 +1,72 @@
+.swiper-pagination-bullet {
+    background-color: #fff;
+  }
+  .no-padding-top .scroll-content{
+      padding-top: 0 !important;
+  }
+  .floating-button {
+    z-index: 1;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 50px;
+    margin-left: 0;
+    // background-color: $base-color-transparent;
+  }
+  .slide-background {
+    background-size: cover !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-color: transparent;
+  }
+  .toolbar-background {
+    border-color: transparent;
+  }
+  .slide-zoom {
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.4)) !important;
+    height: 100%;
+  }
+  .text-wrapper {
+    width: 100vw;
+    height: 100vh;
+  }
+  .slide-text {
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .slide-title {
+    color: white;
+    font-weight: bold;
+    text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
+    font-size: 45px;
+  }
+  .slide-image {
+    max-height: 100%;
+    max-width: 100%;
+    margin: 18px 0;
+  }
+  .last-slide {
+    background-image: url('../../../../assets/backgrounds/slide-play.png');
+  }
+  b {
+    font-weight: 500;
+  }
+  p {
+    padding: 0 40px;
+    font-size: 1em;
+    line-height: 1.5;
+    color: #FFF;
+    text-shadow: -1px 0 black, 0 2px black, 1px 0 black, 0 -1px black;
+    b {
+      color: #000000;
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 5px;
+  }
+

@@ -20,7 +20,7 @@ export class settingsPage implements OnInit {
     this.getUserProfile();
   }
 
-  async getUserProfile(){
+  getUserProfile(){
     this.emailVerified = false;
     this.user = JSON.parse(localStorage.getItem('user'));
     this.emailVerified = this.user.emailVerified;

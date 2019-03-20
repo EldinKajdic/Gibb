@@ -40,8 +40,7 @@ export class AuthService {
   }
 
   async sendEmailVerification() {
-    const result = await this.afAuth.auth.currentUser.sendEmailVerification();
-    console.log(result);
+    // const result = await this.afAuth.auth.currentUser.sendEmailVerification();
   }
 
   async sendPasswordResetEmail(passwordResetEmail: string) {

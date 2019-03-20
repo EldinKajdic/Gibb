@@ -15,6 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { RegisterModalModule } from './pages/register/modals/registermodal/registermodal.module';
+import { HomeModalModule } from './tabs/home/home-modal/home-modal.module';
 
 var config = {
   apiKey: "AIzaSyDM79xt0ytIBLP3fImhkg2ho-S_JEeGf68",
@@ -32,6 +33,7 @@ var config = {
   entryComponents: [],
   imports: [
     RegisterModalModule,
+    HomeModalModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
