@@ -6,7 +6,7 @@
     </ion-buttons>
 </ion-header>
 
-<ion-content fullscreen class="no-padding-top">
+<ion-content fullscreen style="max-height: 100vh;">
   <ion-slides #slider pager="true" (ionSlideWillChange)="onSlideChanged()">
     <ion-slide *ngFor="let slide of slides" class="slide-background"
       [ngStyle]="{'background-image': 'url(' + slide.imageUrl +')'}">
@@ -20,7 +20,7 @@
   </ion-slides>
   <div *ngIf="slideIndex >= slides.length - 1">
     <ion-button class="floating-button" expand="block" (click)="closeModal()">
-      Let's go!
+      <ion-icon name="checkmark"></ion-icon>&nbsp;Let's go!
     </ion-button>
   </div>
 </ion-content>

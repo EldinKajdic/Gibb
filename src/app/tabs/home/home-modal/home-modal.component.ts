@@ -18,22 +18,22 @@ export class HomeModalComponent {
   slides = [
     {
       title: 'Welcome to Gibb!',
-      imageUrl: '../../../../assets/backgrounds/register.png',
+      imageUrl: '../../../../assets/backgrounds/slide-one.png',
       description: 'Connect with friends, schedule gaming time and more',
     },
     {
       title: 'Create group chats',
-      imageUrl: '../../../../assets/backgrounds/slide-team.png',
+      imageUrl: '../../../../assets/backgrounds/slide-two.png',
       description: 'Use the chat features to connect with multiple friends at once',
     },
     {
       title: 'Connect your accounts',
-      imageUrl: '../../../../assets/backgrounds/slide-console.png',
+      imageUrl: '../../../../assets/backgrounds/slide-three.png',
       description: 'Make sure to connect your steam, xbox and playstation accounts for the best experience',
     },
     {
-      title: 'Ready to play?',
-      imageUrl: '../../../../assets/backgrounds/slide-play.png',
+      title: 'Ready for action?',
+      imageUrl: '../../../../assets/backgrounds/slide-four.png',
       description: 'Get into the app and start exploring the features now!',
     }
   ];

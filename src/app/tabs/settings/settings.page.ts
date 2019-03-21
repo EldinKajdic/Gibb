@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +11,7 @@ export class settingsPage implements OnInit {
   user:any;
   defaultProfileUrl:string = '../../assets/profile/defaultProfile.png';
   emailVerified:boolean;
-  constructor(public auth: AuthService, public loadingController: LoadingController) {
+  constructor(public auth: AuthService) {
     
   }
 

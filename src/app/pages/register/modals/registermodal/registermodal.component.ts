@@ -32,7 +32,7 @@ export class RegistermodalComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(user));
         this.auth.sendEmailVerification();
         this.closeModal().then(() => {
-          if (!this.platform.is('cordova')) {
+          if (!this.platform.is('desktop')) {
             this.openIntroModal();
           }
         });
