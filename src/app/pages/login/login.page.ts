@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoadingController, Platform, ModalController, ToastController } from '@ionic/angular';
 import { isNullOrUndefined } from 'util';
 import { RegistermodalComponent } from '../register/modals/registermodal/registermodal.component';

@@ -1,5 +1,6 @@
 import { Component, ViewChild  } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ToastController } from '@ionic/angular';
+import { ChatService } from 'src/app/services/chat/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -15,17 +16,17 @@ export class chatPage {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor() {}
+  constructor(private chatService: ChatService, private toastController: ToastController) {}
 
   chatsToday = [{
-    chatId: 1,
+    id: 1,
     imageUrl: 'https://media.licdn.com/dms/image/C4D03AQHUp9evMmCruA/profile-displayphoto-shrink_200_200/0?e=1556755200&v=beta&t=nKQoJIs8Aiz-JKEUNORmLzMjpWJVkiJoZxIyWnPzOus',
     title: 'MartiaKar',
     lastMessage: 'Where we droppin booyzzz?',
     timestamp: new Date()
   },
   {
-    chatId: 2,
+    id: 2,
     imageUrl: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-1/p50x50/33711477_10216009252241663_8544926530193588224_n.jpg?_nc_cat=101&_nc_ht=scontent-arn2-1.xx&oh=3bbe0d2fcf1a1ab89696ccf02e483e08&oe=5D1DAC95',
     title: 'MayhaaM',
     lastMessage: 'BRB time to walk the dog..',
@@ -33,14 +34,14 @@ export class chatPage {
   }];
 
   chatsYesterday = [{
-    chatId: 3,
+    id: 3,
     imageUrl: 'https://media.licdn.com/dms/image/C4D03AQHUp9evMmCruA/profile-displayphoto-shrink_200_200/0?e=1556755200&v=beta&t=nKQoJIs8Aiz-JKEUNORmLzMjpWJVkiJoZxIyWnPzOus',
     title: 'MartiaKar',
     lastMessage: 'Ping if you see a R209 carbine',
     timestamp: new Date()
   },
   {
-    chatId: 4,
+    id: 4,
     imageUrl: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-1/p50x50/33711477_10216009252241663_8544926530193588224_n.jpg?_nc_cat=101&_nc_ht=scontent-arn2-1.xx&oh=3bbe0d2fcf1a1ab89696ccf02e483e08&oe=5D1DAC95',
     title: 'MayhaaM',
     lastMessage: 'Body armor here, level three!',
@@ -48,14 +49,14 @@ export class chatPage {
   }];
 
   chatsLastWeek= [{
-    chatId: 5,
+    id: 5,
     imageUrl: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-1/p50x50/33711477_10216009252241663_8544926530193588224_n.jpg?_nc_cat=101&_nc_ht=scontent-arn2-1.xx&oh=3bbe0d2fcf1a1ab89696ccf02e483e08&oe=5D1DAC95',
     title: 'MayhaaM',
     lastMessage: 'Helloooo mother truckers',
     timestamp: new Date().setDate(new Date().getDate() - 3)
   },
   {
-    chatId: 6,
+    id: 6,
     imageUrl: 'https://media.licdn.com/dms/image/C4D03AQHUp9evMmCruA/profile-displayphoto-shrink_200_200/0?e=1556755200&v=beta&t=nKQoJIs8Aiz-JKEUNORmLzMjpWJVkiJoZxIyWnPzOus',
     title: 'MartiaKar',
     lastMessage: 'Let\'s go to africa!',
@@ -64,14 +65,14 @@ export class chatPage {
 
   chatsLastMonth= [
   {
-    chatId: 7,
+    id: 7,
     imageUrl: 'https://media.licdn.com/dms/image/C4D03AQHUp9evMmCruA/profile-displayphoto-shrink_200_200/0?e=1556755200&v=beta&t=nKQoJIs8Aiz-JKEUNORmLzMjpWJVkiJoZxIyWnPzOus',
     title: 'MartiaKar',
     lastMessage: 'Wow did you read about the new champ Gibraltar? I heard he rocks!',
     timestamp: new Date().setDate(new Date().getDate() - 14)
   },
   {
-    chatId: 8,
+    id: 8,
     imageUrl: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-1/p50x50/33711477_10216009252241663_8544926530193588224_n.jpg?_nc_cat=101&_nc_ht=scontent-arn2-1.xx&oh=3bbe0d2fcf1a1ab89696ccf02e483e08&oe=5D1DAC95',
     title: 'MayhaaM',
     lastMessage: 'Hey guys lets drop at market for once, relinquish dropmaster please',
@@ -83,7 +84,7 @@ export class chatPage {
       event.target.complete();
 
       this.chatsLastMonth.push({
-        chatId: 9,
+        id: 9,
         imageUrl: 'https://media.licdn.com/dms/image/C4D03AQHUp9evMmCruA/profile-displayphoto-shrink_200_200/0?e=1556755200&v=beta&t=nKQoJIs8Aiz-JKEUNORmLzMjpWJVkiJoZxIyWnPzOus',
         title: 'MartiaKar',
         lastMessage: 'Anyone down to gibb all night?',
@@ -110,11 +111,35 @@ export class chatPage {
     }, 2000);
   }
 
+  createChat(){
+    this.chatService.create();
+  }
+
   showNoMessagesText(){
     if(this.chatsLastMonth.length == 0 && this.chatsLastWeek.length == 0 && this.chatsYesterday.length == 0 && this.chatsToday.length == 0){
       return true;
     }
     return false;
+  }
+
+  sendPlaystationInvite(userName){
+    this.showToast(`An invite to play playstation games was sent to ${userName}.`);
+  }
+
+  sendSteamInvite(userName){
+    this.showToast(`An invite to play Steam games was sent to ${userName}.`);
+  }
+
+  sendXboxInvite(userName){
+    this.showToast(`An invite to play Xbox games was sent to ${userName}.`);
+  }
+
+  async showToast(msg: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 5000
+    });
+    toast.present();
   }
 
 }

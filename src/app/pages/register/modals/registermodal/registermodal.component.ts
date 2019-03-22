@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController, ToastController, Platform } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { isNullOrUndefined } from 'util';
 import { HomeModalComponent } from 'src/app/tabs/home/home-modal/home-modal.component';
 

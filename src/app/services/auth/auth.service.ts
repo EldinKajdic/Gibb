@@ -4,8 +4,8 @@ import { auth } from 'firebase/app'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { Observable, of } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
-import { User } from '../classes/users/user.model';
+import { switchMap, first } from 'rxjs/operators'
+import { User } from '../../classes/users/user.model';
 import { Platform } from '@ionic/angular';
 
 @Injectable({
@@ -65,6 +65,10 @@ export class AuthService {
 
   async getUser() {
     return this.user;
+  }
+
+  getUser2(){
+    return this.user$.pipe(first()).toPromise();
   }
 
   async signInWithCredentials(email: string, password: string) {

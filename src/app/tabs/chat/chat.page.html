@@ -1,6 +1,20 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-searchbar animated="true" [(ngModel)]="searchText" showCancelButton="true" (ionCancel)="searchText = '';"></ion-searchbar>
+    <ion-buttons slot="start">
+      <ion-button icon-only *ngIf="!searchBarDisplayed" (click)="createChat()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="!searchBarDisplayed">
+      Chat
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only *ngIf="!searchBarDisplayed" (click)="searchBarDisplayed = true">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-searchbar [(ngModel)]="searchText" showCancelButton="true"
+      (ionCancel)="searchBarDisplayed = false; searchText = '';" *ngIf="searchBarDisplayed"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +29,7 @@
       <ion-label>Today</ion-label>
     </ion-list-header>
     <ion-item-sliding class="slide-item" *ngFor="let chat of chatsToday | filter: searchText">
-      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+      <ion-item [routerLink]="['/messages/', chat.id]" routerDirection="forward">
         <ion-note class="note-start">{{chat.title}}</ion-note>
         <ion-avatar slot="start">
           <img [src]="chat.imageUrl">
@@ -23,18 +37,18 @@
         <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
         <ion-note class="note-end">{{chat.timestamp | date: 'shortTime'}}</ion-note>
       </ion-item>
-      <ion-item-options side="start">
-        <ion-item-option color="secondary">
+      <ion-item-options side="start" (ionSwipe)="sendPlaystationInvite(chat.title)">
+        <ion-item-option color="secondary" (click)="sendXboxInvite(chat.title)">
           <ion-icon name="logo-xbox"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="dark">
+        <ion-item-option color="dark" (click)="sendSteamInvite(chat.title)">
           <ion-icon name="logo-steam"></ion-icon>
         </ion-item-option>
-        <ion-item-option expandable color="primary">
+        <ion-item-option expandable color="primary" (click)="sendPlaystationInvitechat(chat.title)">
           <ion-icon name="logo-playstation"></ion-icon>
         </ion-item-option>
       </ion-item-options>
-      <ion-item-options side="end">
+      <ion-item-options side="end" (ionSwipe)="removeMessage(chatsToday, chat)">
         <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsToday, chat)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
@@ -46,7 +60,7 @@
       <ion-label>Yesterday</ion-label>
     </ion-list-header>
     <ion-item-sliding class="slide-item" *ngFor="let chat of chatsYesterday | filter: searchText">
-      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+      <ion-item [routerLink]="['/messages/', chat.id]" routerDirection="forward">
         <ion-note class="note-start">{{chat.title}}</ion-note>
         <ion-avatar slot="start">
           <img [src]="chat.imageUrl">
@@ -54,18 +68,18 @@
         <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
         <ion-note class="note-end">{{chat.timestamp | date: 'shortTime'}}</ion-note>
       </ion-item>
-      <ion-item-options side="start">
-        <ion-item-option color="success">
-          <ion-icon name="logo-xbox"></ion-icon>
-        </ion-item-option>
-        <ion-item-option color="dark">
-          <ion-icon name="logo-steam"></ion-icon>
-        </ion-item-option>
-        <ion-item-option expandable color="primary">
-          <ion-icon name="logo-playstation"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-      <ion-item-options side="end">
+      <ion-item-options side="start" (ionSwipe)="sendPlaystationInvite(chat.title)">
+          <ion-item-option color="secondary" (click)="sendXboxInvite(chat.title)">
+            <ion-icon name="logo-xbox"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="dark" (click)="sendSteamInvite(chat.title)">
+            <ion-icon name="logo-steam"></ion-icon>
+          </ion-item-option>
+          <ion-item-option expandable color="primary" (click)="sendPlaystationInvite(chat.title)">
+            <ion-icon name="logo-playstation"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      <ion-item-options side="end" (ionSwipe)="removeMessage(chatsToday, chat)">
         <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsYesterday, chat)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
@@ -77,7 +91,7 @@
       <ion-label>Last Week</ion-label>
     </ion-list-header>
     <ion-item-sliding class="slide-item" *ngFor="let chat of chatsLastWeek | filter: searchText as chatsLastWeekRows">
-      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+      <ion-item [routerLink]="['/messages/', chat.id]" routerDirection="forward">
         <ion-note class="note-start">{{chat.title}}</ion-note>
         <ion-avatar slot="start">
           <img [src]="chat.imageUrl">
@@ -85,18 +99,18 @@
         <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
         <ion-note class="note-end">{{chat.timestamp | date: 'mediumDate'}}</ion-note>
       </ion-item>
-      <ion-item-options side="start">
-        <ion-item-option color="success">
-          <ion-icon name="logo-xbox"></ion-icon>
-        </ion-item-option>
-        <ion-item-option color="dark">
-          <ion-icon name="logo-steam"></ion-icon>
-        </ion-item-option>
-        <ion-item-option expandable color="primary">
-          <ion-icon name="logo-playstation"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-      <ion-item-options side="end">
+      <ion-item-options side="start" (ionSwipe)="sendPlaystationInvite(chat.title)">
+          <ion-item-option color="secondary" (click)="sendXboxInvite(chat.title)">
+            <ion-icon name="logo-xbox"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="dark" (click)="sendSteamInvite(chat.title)">
+            <ion-icon name="logo-steam"></ion-icon>
+          </ion-item-option>
+          <ion-item-option expandable color="primary" (click)="sendPlaystationInvite(chat.title)">
+            <ion-icon name="logo-playstation"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      <ion-item-options side="end" (ionSwipe)="removeMessage(chatsToday, chat)">
         <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsLastWeek, chat)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
@@ -108,7 +122,7 @@
       <ion-label>Last Month</ion-label>
     </ion-list-header>
     <ion-item-sliding class="slide-item" *ngFor="let chat of chatsLastMonth | filter: searchText as chatsLastMonthRows">
-      <ion-item [routerLink]="['/message/', chat.chatId]" routerDirection="forward">
+      <ion-item [routerLink]="['/messages/', chat.id]" routerDirection="forward">
         <ion-note class="note-start">{{chat.title}}</ion-note>
         <ion-avatar slot="start">
           <img [src]="chat.imageUrl">
@@ -116,18 +130,18 @@
         <ion-label class="chat-row">{{chat.lastMessage}}</ion-label>
         <ion-note class="note-end">{{chat.timestamp | date: 'mediumDate'}}</ion-note>
       </ion-item>
-      <ion-item-options side="start">
-        <ion-item-option color="success">
-          <ion-icon name="logo-xbox"></ion-icon>
-        </ion-item-option>
-        <ion-item-option color="dark">
-          <ion-icon name="logo-steam"></ion-icon>
-        </ion-item-option>
-        <ion-item-option expandable color="primary">
-          <ion-icon name="logo-playstation"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-      <ion-item-options side="end">
+      <ion-item-options side="start" (ionSwipe)="sendPlaystationInvite(chat.title)">
+          <ion-item-option color="secondary" (click)="sendXboxInvite(chat.title)">
+            <ion-icon name="logo-xbox"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="dark" (click)="sendSteamInvite(chat.title)">
+            <ion-icon name="logo-steam"></ion-icon>
+          </ion-item-option>
+          <ion-item-option expandable color="primary" (click)="sendPlaystationInvite(chat.title)">
+            <ion-icon name="logo-playstation"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      <ion-item-options side="end" (ionSwipe)="removeMessage(chatsToday, chat)">
         <ion-item-option expandable color="danger" icon-only (click)="removeMessage(chatsLastMonth, chat)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
